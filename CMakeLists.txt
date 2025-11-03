@@ -9,13 +9,18 @@ find_package(Vulkan QUIET)
 message(STATUS "ENV VULKAN_SDK = $ENV{VULKAN_SDK}")
 message(STATUS "CMAKE_SIZEOF_VOID_P = ${CMAKE_SIZEOF_VOID_P}")
 
-target_include_directories(${PROJECT_NAME} PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/Vendors/glfw/include
-)
+add_subdirectory(Vendors/glfw)
+add_subdirectory(Vendors/glm)
 
 find_package(Vulkan REQUIRED)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/HelloTriangleApplication.cpp)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/Vendors/glfw/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/Vendors/glm
+)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Vulkan::Vulkan)
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
+target_link_libraries(${PROJECT_NAME} PUBLIC glm)
